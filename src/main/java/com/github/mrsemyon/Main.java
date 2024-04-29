@@ -1,5 +1,6 @@
 package com.github.mrsemyon;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class Main {
@@ -14,12 +15,12 @@ public class Main {
 
     public static boolean isStringContainsSameLetterCount(String str, Character firstCh, Character secondCh){
         str = str.toLowerCase();
-        long firstChCount = str.chars()
-                .filter(s -> s == firstCh)
-                .count();
-        long secondChCount = str.chars()
-                .filter(s -> s == secondCh)
-                .count();
-        return firstChCount == secondChCount;
+        Stream<Character> firstStream
+                = str.codePoints().mapToObj(c -> (char) c)
+                .filter(c -> c == firstCh);
+        Stream<Character> secondStream
+                = str.codePoints().mapToObj(c -> (char) c)
+                .filter(c -> c == secondCh);
+        return firstStream.count() == secondStream.count();
     }
 }
